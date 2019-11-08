@@ -118,7 +118,7 @@ router.post('/:article/comments', auth.required, (req, res, next) => {
     comment.author = user;
 
     return comment.save().then(() => {
-      req.article.comments.push(comment);
+      req.article.comments = req.article.comments.concat([comment]);
 
       return req.article.save().then(article => {
         res.json({ comment: comment.toJSONFor(user) });
