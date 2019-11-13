@@ -19,7 +19,7 @@ router.post('/users', (req, res, next) => {
 
 router.post('/users/login', (req, res, next) => {
   if (!req.body.user.email) {
-    return res.status(422).json({ error: { email: "can't be black" } });
+    return res.status(422).json({ error: { email: "can't be blank" } });
   }
 
   if (!req.body.user.password) {
@@ -33,8 +33,8 @@ router.post('/users/login', (req, res, next) => {
 
     if (user) {
       console.log("==|==|> user:",user)
-      user.token = user.generateJWT();
-      return res.json({ user: user.toAuthJSON() });
+      token = user.generateJWT();
+      return res.json({ user: user.toAuthJSON(), token });
     } else {
       return res.status(422).json(info);
     }
